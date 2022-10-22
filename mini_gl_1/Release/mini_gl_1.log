@@ -1,18 +1,18 @@
 ﻿  main.cpp
-C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(120,40): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(128,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(221,78): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(297,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(307,72): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(129,40): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(137,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(230,78): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(306,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(316,72): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(352,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(574,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(575,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(361,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(571,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(572,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Generating code
-  2 of 371 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+  1 of 371 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code

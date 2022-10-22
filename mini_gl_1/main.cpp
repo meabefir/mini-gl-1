@@ -100,9 +100,18 @@ struct Balls: public GlDrawer {
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBindVertexArray(vbo);
 
+        // white circle
+        glm::mat4 model(1.f);
+        model = glm::translate(glm::mat4(1.f), pos);
+        model = glm::scale(model, glm::vec3(orbitRadius));
+
+        glLineWidth(1.f);
+        shader->use();
+        shader->setMat4("model", glm::value_ptr(model));
+        shader->setVec3("color", glm::vec3(1.f));
+        glDrawArrays(GL_LINE_LOOP, 1, CIRCLE_FIDELITY);
+
         drawTrail();
-        // shader->setVec3("color", CIRCLE_COLOR_1);
-        // drawBalls();
     }
 
     void drawBalls() {
@@ -481,20 +490,8 @@ int main()
             glClear(GL_COLOR_BUFFER_BIT);
 
             // draw
-            glBindBuffer(GL_ARRAY_BUFFER, circleVBO);
-            glBindVertexArray(circleVAO);
-
-            model = glm::translate(glm::mat4(1.f), balls.pos);
-            model = glm::scale(model, glm::vec3(balls.orbitRadius));
-
-            glLineWidth(1.f);
-            circleShader.use();
-            circleShader.setMat4("model", glm::value_ptr(model));
-            circleShader.setVec3("color", glm::vec3(1.f));
-            glDrawArrays(GL_LINE_LOOP, 1, CIRCLE_FIDELITY);
-
-            obstacleFactory.draw();
             balls.draw();
+            obstacleFactory.draw();
 
             glfwSwapBuffers(window);
         }
