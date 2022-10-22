@@ -12,8 +12,8 @@
 #include <iostream>
 
 const glm::vec3 BACKGROUND_COLOR(6.f / 256.f, 46.f / 256.f, 3.f / 256.f);
-const glm::vec3 CIRCLE_COLOR_1(256.f / 256.f, 0.f / 256.f, 0.f / 256.f);
-const glm::vec3 CIRCLE_COLOR_2(0.f / 256.f, 0.f / 256.f, 256.f / 256.f);
+const glm::vec3 CIRCLE_COLOR_1(255.f / 256.f, 7.f / 256.f, 137.f / 256.f); 
+const glm::vec3 CIRCLE_COLOR_2(219.f / 256.f, 180.f / 256.f, 12.f / 256.f);
 const glm::vec3 RECT_COLOR(114.f / 256.f, 134.f / 256.f, 57.f / 256.f);
 
 glm::vec3 currentCircleColor1;
