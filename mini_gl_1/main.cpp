@@ -27,8 +27,9 @@ void processInput(GLFWwindow* window);
 const unsigned int SCR_WIDTH = 500;
 const unsigned int SCR_HEIGHT = 800;
 
+// balls
 const int TRAIL_SIZE = 40;
-const int CIRCLE_FIDELITY = 15;
+const int CIRCLE_FIDELITY = 50;
 const float CIRCLE_ORBIT_RADIUS = 130.f;
 const float CIRCLE_RADIUS = 20.f;
 const float CIRCLE_SPEED = 210.f;
@@ -200,7 +201,7 @@ struct Balls: public GlDrawer {
     float angle = 0.f;
     float radius = CIRCLE_RADIUS;
     float orbitRadius = CIRCLE_ORBIT_RADIUS;
-    glm::vec3 pos = glm::vec3((float)SCR_WIDTH / 2.f, (float)SCR_HEIGHT * 1.f / 4.f, .0f);
+    glm::vec3 pos = glm::vec3((float)SCR_WIDTH / 2.f, (float)SCR_HEIGHT * 1.f / 5.f, .0f);
 
     float lastAngles[TRAIL_SIZE];
     int currentAngleIndex = 0;
@@ -435,12 +436,10 @@ int main()
     // shaders
     Shader circleShader("shaders/vertex.vert", "shaders/color_fragment.frag");
     circleShader.use();
-    //circleShader.setVec3("color", CIRCLE_COLOR_1);
     circleShader.setMat4("projection", glm::value_ptr(projection));
 
     Shader rectShader("shaders/vertex.vert", "shaders/color_fragment.frag");
     rectShader.use();
-    // rectShader.setVec3("color", RECT_COLOR);
     rectShader.setMat4("projection", glm::value_ptr(projection));
 
     obstacleFactory.bindGlData(rectVBO, rectVAO, &rectShader);
@@ -482,6 +481,18 @@ int main()
             glClear(GL_COLOR_BUFFER_BIT);
 
             // draw
+            glBindBuffer(GL_ARRAY_BUFFER, circleVBO);
+            glBindVertexArray(circleVAO);
+
+            model = glm::translate(glm::mat4(1.f), balls.pos);
+            model = glm::scale(model, glm::vec3(balls.orbitRadius));
+
+            glLineWidth(1.f);
+            circleShader.use();
+            circleShader.setMat4("model", glm::value_ptr(model));
+            circleShader.setVec3("color", glm::vec3(1.f));
+            glDrawArrays(GL_LINE_LOOP, 1, CIRCLE_FIDELITY);
+
             obstacleFactory.draw();
             balls.draw();
 
