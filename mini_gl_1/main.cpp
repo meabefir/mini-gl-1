@@ -17,7 +17,7 @@ const glm::vec3 CIRCLE_COLOR(255.f / 256.f, 0.f / 256.f, 0.f / 256.f);
 const glm::vec3 RECT_COLOR(114.f / 256.f, 134.f / 256.f, 57.f / 256.f);
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-//void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 //void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
 
@@ -43,6 +43,11 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 float realDeltaTime = 0.0f;
 float realLastFrame = 0.0f;
+
+// mouse
+float lastX = SCR_WIDTH / 2.0f;
+float lastY = SCR_HEIGHT / 2.0f;
+float mouseX, mouseY;
 
 // game
 const float SPEED_SLOW = 260.f;
@@ -187,6 +192,11 @@ struct Balls: public GlDrawer {
         active = false;
     }
 
+    void rotate(int dir) {
+        if (!active) return;
+        angle += (float)dir * speed * realDeltaTime;
+    }
+
     glm::mat4 ball1 = glm::mat4(1.f);
     glm::mat4 ball2 = glm::mat4(1.f);
     float speed = CIRCLE_SPEED;
@@ -312,7 +322,7 @@ struct ObstacleFactory: public GlDrawer {
     }
 
     Obstacle getObstacle(ObstacleType type) {
-        glm::vec2 pos((float)SCR_WIDTH * (rand() % 2 == 0 ? (1.f / 4.f) : (3.f / 4.f)), (float)SCR_HEIGHT);
+        glm::vec2 pos((float)SCR_WIDTH * (rand() % 2 == 0 ? (1.f / 4.f) : (3.f / 4.f)), (float)SCR_HEIGHT + 100.f);
 
         switch (type)
         {
@@ -361,7 +371,7 @@ int main()
     }
     glfwMakeContextCurrent(window);
     // glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    // glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetCursorPosCallback(window, mouse_callback);
     // glfwSetScrollCallback(window, scroll_callback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -439,7 +449,7 @@ int main()
     obstacleFactory.bindGlData(rectVBO, rectVAO, &rectShader);
     balls.bindGlData(circleVBO, circleVAO, &circleShader);
 
-    glEnable(GL_BLEND); //Enable blending.
+    glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     glm::mat4 model(1.f);
@@ -524,11 +534,18 @@ void processInput(GLFWwindow* window)
         glfwSetWindowShouldClose(window, true);
 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        if (balls.active)
-            balls.angle += balls.speed * realDeltaTime;
+        balls.rotate(1);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        if (balls.active)
-            balls.angle -= balls.speed * realDeltaTime;
+        balls.rotate(-1);
+
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS) {
+        if (mouseX >= SCR_WIDTH / 2.f) {
+            balls.rotate(-1);
+        }
+        else {
+            balls.rotate(1);
+        }
+    }
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -538,4 +555,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     // make sure the viewport matches the new window dimensions; note that width and 
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
+}
+
+void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
+{
+    mouseX = xposIn;
+    mouseY = yposIn;
 }
