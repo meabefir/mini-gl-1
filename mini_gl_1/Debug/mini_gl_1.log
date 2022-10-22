@@ -1,15 +1,15 @@
 ﻿  main.cpp
-C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(120,40): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(128,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(222,78): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(298,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(308,72): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(123,40): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(131,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(224,78): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(300,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(310,72): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(353,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(563,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(564,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(337): warning C4715: 'ObstacleFactory::getObstacle': not all control paths return a value
+C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(355,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(568,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(569,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Strut\source\repos\mini_gl_1\mini_gl_1\main.cpp(339): warning C4715: 'ObstacleFactory::getObstacle': not all control paths return a value
   mini_gl_1.vcxproj -> C:\Users\Strut\source\repos\mini_gl_1\Debug\mini_gl_1.exe

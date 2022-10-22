@@ -12,9 +12,12 @@
 #include <iostream>
 
 const glm::vec3 BACKGROUND_COLOR(6.f / 256.f, 46.f / 256.f, 3.f / 256.f);
-// const glm::vec3 CIRCLE_COLOR(255.f / 256.f, 150.f / 256.f, 79.f / 256.f);
-glm::vec3 CIRCLE_COLOR(256.f / 256.f, 0.f / 256.f, 0.f / 256.f);
+const glm::vec3 CIRCLE_COLOR_1(256.f / 256.f, 0.f / 256.f, 0.f / 256.f);
+const glm::vec3 CIRCLE_COLOR_2(0.f / 256.f, 0.f / 256.f, 256.f / 256.f);
 const glm::vec3 RECT_COLOR(114.f / 256.f, 134.f / 256.f, 57.f / 256.f);
+
+glm::vec3 currentCircleColor1;
+glm::vec3 currentCircleColor2;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -24,14 +27,14 @@ void processInput(GLFWwindow* window);
 const unsigned int SCR_WIDTH = 500;
 const unsigned int SCR_HEIGHT = 800;
 
-const int TRAIL_SIZE = 100;
+const int TRAIL_SIZE = 40;
 const int CIRCLE_FIDELITY = 15;
 const float CIRCLE_ORBIT_RADIUS = 130.f;
 const float CIRCLE_RADIUS = 20.f;
 const float CIRCLE_SPEED = 210.f;
 
 // fps
-const float FPS = 120.f;
+const float FPS = 200.f;
 const float frameTime = 1.f / FPS;
 bool shouldRender = true;
 float timePassed = 0.f;
@@ -50,8 +53,8 @@ float lastY = SCR_HEIGHT / 2.0f;
 float mouseX, mouseY;
 
 // game
-const float SPEED_SLOW = 260.f;
-const float SPEED_MEDIUM = 260.f;
+const float SPEED_SLOW = 300.f;
+const float SPEED_MEDIUM = 340.f;
 float gameTempo = 2.f;
 
 bool restart = false;
@@ -77,9 +80,6 @@ struct GlDrawer {
 struct Balls: public GlDrawer {
     void update() {
         handleReset();
-        drawTrail();
-
-        updateBalls();
     }
 
     void updateBalls() {
@@ -95,13 +95,12 @@ struct Balls: public GlDrawer {
     }
 
     void draw() {
-        // todo draw the trail!!
         shader->use();
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBindVertexArray(vbo);
 
-        shader->setVec3("color", CIRCLE_COLOR);
         drawTrail();
+        // shader->setVec3("color", CIRCLE_COLOR_1);
         // drawBalls();
     }
 
@@ -163,8 +162,8 @@ struct Balls: public GlDrawer {
             indices[k++] = i;
         }
 
-        glm::vec3 current_color = CIRCLE_COLOR;
-        glm::vec3 target_color(CIRCLE_COLOR.z, CIRCLE_COLOR.y, CIRCLE_COLOR.x);
+        glm::vec3 current_color = currentCircleColor1;
+        glm::vec3 target_color = currentCircleColor2;
         glm::vec3 increment_color = (target_color - current_color) / (float)TRAIL_SIZE;
 
         float radius_decrement = initial_radius / (float)TRAIL_SIZE;
@@ -183,7 +182,6 @@ struct Balls: public GlDrawer {
 
         angle = initial_angle;
         radius = initial_radius;
-        shader->setVec3("color", CIRCLE_COLOR);
         updateBalls();
     }
 
@@ -250,7 +248,7 @@ struct Obstacle {
 
 struct ObstacleFactory: public GlDrawer {
     void update() {
-        const static float wait = 1.f;
+        const static float wait = .9f;
 
         timer += realDeltaTime;
         if (timer >= wait) {
@@ -329,7 +327,7 @@ struct ObstacleFactory: public GlDrawer {
             return Obstacle(250.f, 75.f, SPEED_SLOW, pos);
             break;
         case ObstacleType::BOX:
-            return Obstacle(125.f, 125.f, SPEED_MEDIUM, pos);
+            return Obstacle(125.f, 125.f, SPEED_SLOW, pos);
             break;
         default:
             break;
@@ -437,12 +435,12 @@ int main()
     // shaders
     Shader circleShader("shaders/vertex.vert", "shaders/color_fragment.frag");
     circleShader.use();
-    circleShader.setVec3("color", CIRCLE_COLOR);
+    //circleShader.setVec3("color", CIRCLE_COLOR_1);
     circleShader.setMat4("projection", glm::value_ptr(projection));
 
     Shader rectShader("shaders/vertex.vert", "shaders/color_fragment.frag");
     rectShader.use();
-    rectShader.setVec3("color", RECT_COLOR);
+    // rectShader.setVec3("color", RECT_COLOR);
     rectShader.setMat4("projection", glm::value_ptr(projection));
 
     obstacleFactory.bindGlData(rectVBO, rectVAO, &rectShader);
@@ -473,7 +471,9 @@ int main()
 
         if (shouldRender) {
             float scale = 2.f;
-            CIRCLE_COLOR = glm::vec3(sin(glfwGetTime() * gameTempo * scale), 0.f, 1 - sin(glfwGetTime() * gameTempo * scale));
+            glm::vec3 color1_to_color2(CIRCLE_COLOR_2 - CIRCLE_COLOR_1);
+            currentCircleColor1 = glm::vec3(CIRCLE_COLOR_1 + color1_to_color2 * (float)abs(sin(glfwGetTime() * gameTempo * scale)));
+            currentCircleColor2 = glm::vec3(CIRCLE_COLOR_1 + color1_to_color2 * (1 - (float)abs(sin(glfwGetTime() * gameTempo * scale))));
 
             updateDelta();
             shouldRender = false;
